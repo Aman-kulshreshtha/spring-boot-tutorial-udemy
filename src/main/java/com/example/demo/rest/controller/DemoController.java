@@ -8,10 +8,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DemoController {
 
-    private final Coach coach;
+    private  Coach coach;
 
+//    This is an example of contructor injection
+//    @Autowired
+//    public DemoController(Coach thisCoach) {
+//        coach = thisCoach;
+//    }
+
+//    This is an example of setter injection
     @Autowired
-    public DemoController(Coach thisCoach) {
+    public void setCoach(Coach thisCoach) {
         coach = thisCoach;
     }
 
