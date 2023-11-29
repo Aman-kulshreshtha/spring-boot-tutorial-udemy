@@ -13,7 +13,7 @@ public class DemoController {
 
 //    This is an example of contructor injection
     @Autowired
-    public DemoController(@Qualifier("tennisCoach") Coach thisCoach) { // now we have so many coach implementation so which one to inject?  use Qualifier annotation
+    public DemoController(@Qualifier("baseballCoach") Coach thisCoach) { // now we have so many coach implementation so which one to inject?  use Qualifier annotation
         coach = thisCoach;
     }
 
