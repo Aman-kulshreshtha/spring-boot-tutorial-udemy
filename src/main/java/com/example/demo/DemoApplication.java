@@ -24,20 +24,30 @@ public class DemoApplication {
 	}
 
 	private void createStudent(StudentDAO studentDao) {
-		Student student = new Student("Bittu","Kulshreshtha","aman@gmail.com");
+//		Student student = new Student("Bittu","Kulshreshtha","aman@gmail.com");
+//
+//
+//		studentDao.save(student);
+//
+//		System.out.println("Saved Student details..... Id of newly generated student: "+student.getId());
+//
+//		System.out.println("Finding student by given id.....");
+//
+//		Student searchResult = studentDao.findStudentById(student.getId());
+//
+//		System.out.println("Search Result: " + searchResult);
+//
+//		System.out.println(studentDao.findStudentByFirstName("Bittu"));
 
+		Student updateStudent = new Student();
+		updateStudent.setFirstName("sala");
+		updateStudent.setLastName("bala");
+		updateStudent.setEmail("lala_bala@gmail.com");
 
-		studentDao.save(student);
+		studentDao.updateStudentById(2,updateStudent);
 
-		System.out.println("Saved Student details..... Id of newly generated student: "+student.getId());
+		studentDao.deleteStudentById(2);
 
-		System.out.println("Finding student by given id.....");
-
-		Student searchResult = studentDao.findStudentById(student.getId());
-
-		System.out.println("Search Result: " + searchResult);
-
-		System.out.println(studentDao.findStudentByFirstName("Bittu"));
 
 	}
 
