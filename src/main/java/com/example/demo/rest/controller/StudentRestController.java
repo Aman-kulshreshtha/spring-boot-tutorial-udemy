@@ -1,11 +1,12 @@
 package com.example.demo.rest.controller;
 
 import com.example.demo.entity.Student;
+import com.example.demo.error.StudentErrorResponse;
+import com.example.demo.exception.StudentNotFoundException;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,28 @@ public class StudentRestController {
         data = studentList;
     }
 
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleStudentNotFoundException(StudentNotFoundException exception) {
+        StudentErrorResponse error = new StudentErrorResponse(404,exception.getMessage());
+        return new ResponseEntity<StudentErrorResponse>(error, HttpStatusCode.valueOf(404));
+
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleStudentException(Exception exception) {
+        StudentErrorResponse error = new StudentErrorResponse(400,exception.getMessage());
+        return new ResponseEntity<StudentErrorResponse>(error, HttpStatusCode.valueOf(400));
+
+    }
+
     @GetMapping("/student/{studentId}")
     public Student getStudent(@PathVariable int studentId) {
+
+        // check if student exists or not with given index
+        if(studentId < 0 || studentId >= data.size()) {
+            // throw exception
+            throw new StudentNotFoundException("No Student exists with given id");
+        }
         return data.get(studentId);
     }
 
