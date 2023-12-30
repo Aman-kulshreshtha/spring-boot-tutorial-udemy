@@ -31,12 +31,7 @@ public class StudentRestController {
         data = studentList;
     }
 
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleStudentNotFoundException(StudentNotFoundException exception) {
-        StudentErrorResponse error = new StudentErrorResponse(404,exception.getMessage());
-        return new ResponseEntity<StudentErrorResponse>(error, HttpStatusCode.valueOf(404));
 
-    }
 
     @ExceptionHandler
     public ResponseEntity<StudentErrorResponse> handleStudentException(Exception exception) {
