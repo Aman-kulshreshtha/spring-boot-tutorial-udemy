@@ -22,14 +22,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public void save(Employee employee) {
+//        int rows = entityManager.createQuery("INSERT INTO Employee VALUE (':firstName',':lastName',':email')")
+//                .setParameter("firstName",employee.getFirstName())
+//                .setParameter("lastName", employee.getLastName())
+//                .setParameter("email",employee.getEmail()).executeUpdate();
+//        System.out.println("Inserted "+rows+" rows");
         entityManager.persist(employee);
     }
 
     @Override
     public Employee getEmployeeById(int id) {
-        TypedQuery<Employee> query = entityManager.createQuery("FROM employee WHERE id=:id",Employee.class).setParameter("id",id);
+        TypedQuery<Employee> query = entityManager.createQuery("FROM Employee WHERE id=:id",Employee.class).setParameter("id",id);
         List<Employee> resultList = query.getResultList();
         if(resultList == null || resultList.size() == 0) {
             // throw an exception of student not found
@@ -40,15 +44,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public List<Employee> getEmployee() {
-        TypedQuery<Employee> query = entityManager.createQuery("FROM employee",Employee.class);
+        TypedQuery<Employee> query = entityManager.createQuery("FROM Employee",Employee.class);
         List<Employee> resultList = query.getResultList();
         return resultList;
     }
 
     @Override
-    @Transactional
     public void update(Employee employee, int id) {
-        int rowsUpdated = entityManager.createQuery("UPDATE employee SET first_name=:firstName, last_name=:lastName, email=:email WHERE id=:id")
+        int rowsUpdated = entityManager.createQuery("UPDATE Employee SET firstName=:firstName, lastName=:lastName, email=:email WHERE id=:id")
                 .setParameter("firstName",employee.getFirstName())
                 .setParameter("lastName",employee.getLastName())
                 .setParameter("email",employee.getEmail())
@@ -59,9 +62,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public void delete(int id) {
-        int query = entityManager.createQuery(" DELETE FROM employee where id=:id").setParameter("id",id).executeUpdate();
-        System.out.println("Deleted "+query+" recirds");
+        int query = entityManager.createQuery(" DELETE FROM Employee where id=:id")
+                .setParameter("id",id)
+                .executeUpdate();
+        System.out.println("Deleted "+query+" records");
     }
 }
